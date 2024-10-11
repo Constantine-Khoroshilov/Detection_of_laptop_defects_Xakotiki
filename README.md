@@ -1,1 +1,1 @@
-# Detection_of_laptop_defects_Xakotiki
+# Определение дефектов на ноутбуках
