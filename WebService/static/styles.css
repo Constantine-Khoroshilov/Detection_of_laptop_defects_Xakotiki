@@ -1,9 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    font-family: 'Verdana', sans-serif;
+    font-family: 'calibri light', sans-serif;
+    padding: 10px;
 }
 
 .form {
     text-align: center;
+}
+
+.form input {
+    padding: 5px;
 }
 
 .imgsPreview {
@@ -22,6 +32,8 @@ body {
     justify-content: space-between;
     flex-direction: column;
     list-style-type: none;
+
+    font-size: 13px;
 }
 
 .imgsPreview input {
@@ -33,4 +45,50 @@ body {
     border: none;
     
     cursor: pointer;
+}
+
+.editor {
+    display: none;
+    justify-content: space-around;
+
+    margin: 15px;
+    padding: 15px;
+}
+
+.defectsContainer {    
+    flex: 1;
+    padding: 20px;
+    overflow: auto;
+
+    border-bottom: 2px solid silver;
+    border-right: 2px solid silver;
+    border-top: 2px solid silver;
+}
+
+.defectsContainer > input {
+    width: 100%;
+
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    
+    cursor: pointer;
+}
+
+.defectsContainer li {
+    list-style-type: none;
+    margin-bottom: 10px;
+
+    font-size: 20px;
+}
+
+.defectsContainer h3 {
+    margin: 20px 0;
+
+    font-size: 30px;
+    font-weight: bold;
 }

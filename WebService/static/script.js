@@ -55,6 +55,24 @@ function validate() {
 }
 
 
+function defects() {
+    imgsPreview.innerHTML = '';
+
+    for (let i = 0; i < gotDefets.length; i++) {
+        const imageUrl = URL.createObjectURL(gotDefets[i].src);
+        imgsPreview.innerHTML += `
+            <li>
+                <img src="${imageUrl}">
+                <input 
+                    type="button" 
+                    value="Редактировать" 
+                    onclick="showDefect()">
+            </li>
+        `
+    }
+}
+
+
 uploadButton.addEventListener('click', () => {
     const fileInput = d.createElement('input');
     fileInput.type = 'file';
@@ -74,11 +92,13 @@ submitButton.addEventListener('click', async function() {
     if (!validate()) return;
 
     const formData = new FormData();
-    
+
     for (let i = 0; i < uploadImages.length; i++)
         formData.append('images', uploadImages[i]);
 
     formData.append('number', serialNumInput.value);
+
+    form.style.display = 'none';
 
     try {
         const response = await fetch('/upload/', {
@@ -86,10 +106,11 @@ submitButton.addEventListener('click', async function() {
             body: formData
         });
 
-        let result = await response.text();
-        d.getElementById('response').innerText = `Файл: ${result}`;
+        let imagesWithDefects = await response.json();
 
     } catch (error) {
-        d.getElementById('response').innerText = `Ошибка: ${error.message}`;
+        alert('Ошибка соединения');
     }
 });
+
+

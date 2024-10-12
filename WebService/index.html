@@ -8,16 +8,22 @@
     <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
-    <div class="form">
+    <div id="form" class="form">
         <input type="button" value="Добавить фотографии" id="uploadButton">
         <input type="number" placeholder="Серийный номер" id="serialNumInput">
         <input type="button" value="Отправить" id="submitButton">
     </div>
         
     <div id="imgsPreview" class="imgsPreview"></div>
-
-    <div id="response"></div>
+        
+    <div class="editor" id="editor">
+        <canvas width="640" height="400" id="canvas"></canvas>
+        <div class="defectsContainer" id="defectsContainer">
+            <input type="button" value="Сохранить изменения" onclick="saveChanges()">
+        </div>
+    </div>
 
     <script src="static/script.js"></script>
+    <script src="static/editor.js"></script>
 </body>
 </html>
