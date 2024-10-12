@@ -1,0 +1,36 @@
+body {
+    font-family: 'Verdana', sans-serif;
+}
+
+.form {
+    text-align: center;
+}
+
+.imgsPreview {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.imgsPreview li {
+    max-width: 150px;
+    margin: 30px;
+
+    padding: 10px;
+    border: 2px solid silver;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    list-style-type: none;
+}
+
+.imgsPreview input {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+
+    padding: 10px 15px;
+    border: none;
+    
+    cursor: pointer;
+}
