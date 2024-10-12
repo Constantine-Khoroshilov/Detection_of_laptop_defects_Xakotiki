@@ -27,9 +27,9 @@ def Detection(fileName): #на вход изображение, на выход�
                 xmax = int(xmax)
                 ymax = int(ymax)
                 temp.append(xmin)
-                temp.append(ymin)
-                temp.append(xmax)
                 temp.append(ymax)
+                temp.append(ymax - ymin)
+                temp.append(xmax - xmin)
 
                 ArrayOfBounds[class_name[int(class_id)]].append(temp)
 
