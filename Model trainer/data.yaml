@@ -1,0 +1,7 @@
+train: dataset/images/train
+val: dataset/images/valid
+test: dataset/images/test
+
+nc: 7
+names: ['scratches', 'Dead pixel','Keyboard problems','Locked','Missing screw','chip','Screen cracks']
+
