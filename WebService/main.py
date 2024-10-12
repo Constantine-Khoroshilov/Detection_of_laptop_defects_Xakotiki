@@ -1,13 +1,15 @@
+import os
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-
+from scan import Detection
+import json
 
 app = FastAPI()
 
 UPLOAD_DIRECTORY = "uploads"
 
-# Подключаем статические файлы
+# пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
@@ -24,8 +26,25 @@ async def upload_files(images: list[UploadFile] = File(...), number: int = Form(
         image_location = f"{UPLOAD_DIRECTORY}/{image.filename}"
         with open(image_location, "wb") as image_obj:
             image_obj.write(await image.read())
-    
-    return {"message": "File uploaded successfully!"}
+    Deffect = []
+    for filename in os.listdir(UPLOAD_DIRECTORY):
+        dictionary = Detection(filename)
+        onDellete = []
+        for key, val in dictionary.items():
+            if val == []:
+                onDellete.append(key)
+        for key in onDellete:
+            dictionary.pop(key)
+        temp ={"src":f"{UPLOAD_DIRECTORY}/{filename}",
+               "defect": dictionary
+               }
+        Deffect.append(temp)
+
+
+
+
+
+    return json.dumps(Deffect)
 
 
 if __name__ == "__main__":
