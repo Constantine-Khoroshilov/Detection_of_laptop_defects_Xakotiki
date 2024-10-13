@@ -249,11 +249,11 @@ submitButton.addEventListener('click', async function() {
     }
 });
 
-function send() {
+async function send() {
     try {
         const response = await fetch('/report/' + serialNumInput.value + '/', {
             method: 'POST',
-            body: JSON.stringify(imagesWithDefects);
+            body: JSON.stringify(imagesWithDefects)
         });
 
         let report = await response.json();

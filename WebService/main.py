@@ -1,10 +1,12 @@
 import os
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 from fastapi.responses import HTMLResponse, FileResponse
+from fastapi import FastAPI, File, UploadFile, Form,Body
+from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from scan import Detection
 import json
-
+from generate_report import create_report
 app = FastAPI()
 
 UPLOAD_DIRECTORY = "uploads"
@@ -45,6 +47,7 @@ async def upload_files(images: list[UploadFile] = File(...), number: int = Form(
                "defect": dictionary
                }
         Deffect.append(temp)
+
         
     return json.dumps(Deffect)
 
@@ -58,7 +61,11 @@ async def get_image(folder_number: str, image_name: str):
         return FileResponse(image_path)
     else:
         raise HTTPException(status_code=404, detail="Image not found")
-
+    
+@app.post("/report/{id_laptop}")
+async def get_report_info(id_laptop :int, json_file: list[dict]=Body(...)):
+    create_report(json_file,id_laptop)
+    return "/Отчет о ноутбуке №" + str(id_laptop) + ".pdf"
 
 if __name__ == "__main__":
     import uvicorn
