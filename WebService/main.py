@@ -42,12 +42,16 @@ async def upload_files(images: list[UploadFile] = File(...), number: int = Form(
                "defect": dictionary
                }
         Deffect.append(temp)
-
-
-
-
-
     return json.dumps(Deffect)
+
+@apt.post("/upload")
+async def get_report_info(items: list[Form()]):
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
