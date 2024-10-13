@@ -1,6 +1,6 @@
 import os
-from fastapi import FastAPI, File, UploadFile, Form
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, File, UploadFile, Form, HTTPException
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from scan import Detection
 import json
@@ -9,7 +9,6 @@ app = FastAPI()
 
 UPLOAD_DIRECTORY = "uploads"
 
-# ���������� ����������� �����
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
@@ -23,15 +22,19 @@ async def read_root():
 @app.post("/upload/")
 async def upload_files(images: list[UploadFile] = File(...), number: int = Form(...)):
     UPLOAD_DIRECTORY_CODE =UPLOAD_DIRECTORY+ "/"+str(number)
+    
     if not os.path.isdir(UPLOAD_DIRECTORY_CODE):
         os.mkdir(UPLOAD_DIRECTORY_CODE)
+        
     for image in images:    
         image_location = f"{UPLOAD_DIRECTORY_CODE}/{image.filename}"
         with open(image_location, "wb") as image_obj:
             image_obj.write(await image.read())
+            
     Deffect = []
+    
     for filename in os.listdir(UPLOAD_DIRECTORY_CODE):
-        dictionary = Detection(filename)
+        dictionary = Detection(UPLOAD_DIRECTORY_CODE + '/' + filename)
         onDellete = []
         for key, val in dictionary.items():
             if val == []:
@@ -42,12 +45,19 @@ async def upload_files(images: list[UploadFile] = File(...), number: int = Form(
                "defect": dictionary
                }
         Deffect.append(temp)
-
-
-
-
-
+        
     return json.dumps(Deffect)
+
+@app.get("/uploads/{folder_number}/{image_name}")
+async def get_image(folder_number: str, image_name: str):
+    # Формируем путь к изображению
+    image_path = os.path.join("uploads", folder_number, image_name)
+    
+    # Проверяем, существует ли файл
+    if os.path.exists(image_path):
+        return FileResponse(image_path)
+    else:
+        raise HTTPException(status_code=404, detail="Image not found")
 
 
 if __name__ == "__main__":
