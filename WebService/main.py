@@ -1,10 +1,10 @@
 import os
-from fastapi import FastAPI, File, UploadFile, Form
+from fastapi import FastAPI, File, UploadFile, Form,Body
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from scan import Detection
 import json
-
+from generate_report import create_report
 app = FastAPI()
 
 UPLOAD_DIRECTORY = "uploads"
@@ -44,9 +44,9 @@ async def upload_files(images: list[UploadFile] = File(...), number: int = Form(
         Deffect.append(temp)
     return json.dumps(Deffect)
 
-@apt.post("/upload")
-async def get_report_info(items: list[Form()]):
-
+@app.post("/report/{id_laptop}")
+async def get_report_info(id_laptop :int, json_file: list[dict]=Body(...)):
+    create_report(json_file,id_laptop)
 
 
 
