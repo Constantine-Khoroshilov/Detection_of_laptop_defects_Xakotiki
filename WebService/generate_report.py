@@ -111,5 +111,3 @@ def create_report(laptop, serial_number):
     report.cell(30, 10, conclusion)
 
     report.output(f'Отчёт о ноутбуке №{serial_number}.pdf', 'F')
-
-create_report(0, "1267328712")
